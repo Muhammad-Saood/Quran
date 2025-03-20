@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قرآن مجید</title>
+    <style>
+        body {
+            font-family: 'Noto Nastaliq Urdu', Arial, sans-serif;
+            text-align: center;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        .container {
+            padding: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .juz-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .juz-item {
+            width: 90%;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .juz-item:hover {
+            transform: scale(1.05);
+        }
+        .para-text {
+            font-size: 20px;
+            font-weight: normal;
+            color: #666;
+        }
+        .juz-text {
+            font-size: 26px;
+            font-weight: bold;
+            color: #000;
+        }
+        .back-arrow {
+            font-size: 30px;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+        }
+        .juz-images {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 90vh;
+            touch-action: pan-y;
+        }
+        .juz-images img {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+        }
+        .juz-images img.zoomed {
+            transform: scale(2);
+        }
+        .full-page-image {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            background: url('quran-cover.png') center/cover no-repeat;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="openingPage" class="full-page-image"></div>
+
+    <div id="juzPage" class="container hidden">
+        <h2>پارہ منتخب کریں</h2>
+        <div class="juz-list" id="juzList"></div>
+    </div>
+
+    <div id="imagePage" class="container hidden">
+        <a class="back-arrow" onclick="goBack()">🔙</a>
+        <h2 id="juzTitle"></h2>
+        <div class="juz-images" id="juzImages"></div>
+    </div>
+
+<script>
+    setTimeout(() => {
+        document.getElementById("openingPage").classList.add("hidden");
+        document.getElementById("juzPage").classList.remove("hidden");
+        loadJuzList();
+    }, 3000);
+
+    const githubRawUrl = "https://raw.githubusercontent.com/saudking48/Quran/main/";
+
+    const juzNames = [
+        "اَلٓمّٓ", "سَيَقُوْلُ", "تِلْكَ الرُّسُلُ", "لَنْ تَنَالُوا", "وَالْمُحْصَنَاتُ", "لَا يُحِبُّ اللَّهُ",
+        "وَاِذَا سَمِعُوا", "وَلَوْ اَنَّنَا", "قَالَ الْمَلَأُ", "وَاعْلَمُوا", "يَعْتَذِرُوْنَ", "وَمَا مِنْ دَابَّةٍ",
+        "وَمَآ اُبَرِّئُ", "رُبَمَا", "سُبْحَانَ الَّذِي", "قَالَ اَلَمْ", "اِقْتَرَبَ لِلنَّاسِ", "قَدْ اَفْلَحَ",
+        "وَقَالَ الَّذِينَ", "اَمَّنْ خَلَقَ", "اُتْلُ مَآ اُوحِيَ", "وَمَنْ يَّقْنُتْ", "وَمَا لِيَ", "فَمَنْ اَظْلَمُ",
+        "اِلَيْهِ يُرَدُّ", "حٰمٓ", "قَالَ فَمَا خَطْبُكُمْ", "قَدْ سَمِعَ اللَّهُ", "تَبَارَكَ الَّذِي", "عَمَّ يَتَسَاءَلُونَ"
+    ];
+
+    // Define the number of pages for each Juz
+    const juzPages = {
+        1: 35,  2: 34,  3: 34,  4: 34,  5: 34,  6: 34,
+        7: 34,  8: 34,  9: 34, 10: 32, 11: 34, 12: 34,
+        13: 34, 14: 34, 15: 34, 16: 34, 17: 34, 18: 34,
+        19: 34, 20: 32, 21: 34, 22: 34, 23: 36, 24: 32,
+        25: 34, 26: 34, 27: 36, 28: 36, 29: 38, 30: 42
+    };
+
+    function loadJuzList() {
+        const juzList = document.getElementById("juzList");
+        juzList.innerHTML = "";
+
+        for (let i = 1; i <= 30; i++) {
+            let juzItem = document.createElement("div");
+            juzItem.classList.add("juz-item");
+
+            let paraText = document.createElement("div");
+            paraText.classList.add("para-text");
+            paraText.textContent = `پارہ نمبر ${i}`;
+
+            let juzText = document.createElement("div");
+            juzText.classList.add("juz-text");
+            juzText.textContent = juzNames[i - 1];
+
+            juzItem.appendChild(paraText);
+            juzItem.appendChild(juzText);
+            juzItem.onclick = () => loadJuzImages(i);
+
+            juzList.appendChild(juzItem);
+        }
+    }
+
+    function loadJuzImages(juz) {
+        document.getElementById("juzPage").classList.add("hidden");
+        document.getElementById("imagePage").classList.remove("hidden");
+        document.getElementById("juzTitle").textContent = "پارہ نمبر " + juz;
+
+        const juzImagesContainer = document.getElementById("juzImages");
+        juzImagesContainer.innerHTML = "";
+
+        let totalPages = juzPages[juz] || 18;  // Default to 18 if not specified
+
+        for (let i = 1; i <= totalPages; i++) {
+            let imgElement = document.createElement("img");
+            imgElement.src = `${githubRawUrl}Juz${juz}/quran-juz-${juz}-urdu-translation-${i}.jpg`;
+            imgElement.alt = `پارہ ${juz} صفحہ ${i}`;
+            juzImagesContainer.appendChild(imgElement);
+        }
+      let scale = 1;
+const container = document.getElementById("juzImages");
+
+container.addEventListener("wheel", (e) => {
+    e.preventDefault(); // Prevent default scroll
+    scale += e.deltaY * -0.01; // Zoom in/out with the mouse wheel
+    scale = Math.min(Math.max(.5, scale), 3); // Limit zoom levels
+    container.style.transform = `scale(${scale})`;
+});
+
+let lastTouchDist = 0;
+
+container.addEventListener("touchmove", (e) => {
+    if (e.touches.length === 2) {
+        e.preventDefault(); // Prevent normal scrolling
+        const dist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+        );
+        if (lastTouchDist) {
+            scale *= dist / lastTouchDist;
+            scale = Math.min(Math.max(.5, scale), 3); // Limit zoom levels
+            container.style.transform = `scale(${scale})`;
+        }
+        lastTouchDist = dist;
+    }
+});
+
+container.addEventListener("touchend", () => {
+    lastTouchDist = 0;
+});
+    }
+
+    function goBack() {
+        document.getElementById("imagePage").classList.add("hidden");
+        document.getElementById("juzPage").classList.remove("hidden");
+    }
+  </script>
+
+</body>
+  </html>
