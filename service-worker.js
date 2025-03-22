@@ -2,8 +2,8 @@ const CACHE_NAME = "quran-pwa-cache";
 const FILES_TO_CACHE = [
     "/",
     "/index.html",
-    "/style.css",
-    "/script.js",
+    "/manifest.json",
+    "/service-worker.js",
     "/icon-192x192.png",
     "/icon-512x512.png"
 ];
