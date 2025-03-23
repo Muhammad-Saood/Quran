@@ -2,6 +2,7 @@
 <html lang="ur">
 <head>
     <meta charset="UTF-8">
+    <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قرآن مجید</title>
     <style>
@@ -92,6 +93,9 @@
         }
     </style>
 </head>
+    <head>
+        <link rel="manifest" href="/manifest.json">
+    </head>
 <body>
 
     <div id="openingPage" class="full-page-image"></div>
@@ -211,5 +215,16 @@ container.addEventListener("touchend", () => {
         document.getElementById("juzPage").classList.remove("hidden");
     }
   </script>
+    <script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+    .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+    })
+    .catch(error => {
+        console.log('Service Worker registration failed:', error);
+    });
+}
+    </script>
 </body>
   </html>
