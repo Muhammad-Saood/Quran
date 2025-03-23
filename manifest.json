@@ -1,7 +1,7 @@
 {
   "name": "Quran Web App",
   "short_name": "Quran",
-  "description": "A simple Quran web app with Juz and Hadith selection.",
+  "description": "A simple Quran web app with Juz selection.",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
