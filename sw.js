@@ -5,7 +5,7 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 const CACHE = "pwabuilder-page";
 
 // TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "ToDo-replace-this-name.html";
+const offlineFallbackPage = "index.html";
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
@@ -15,8 +15,25 @@ self.addEventListener("message", (event) => {
 
 self.addEventListener('install', async (event) => {
   event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.add(offlineFallbackPage))
+caches.open(CACHE)
+  .then((cache) => {
+    return cache.addAll([
+      "/",
+      "/index.html",
+      "/style.css",
+      "/manifest.json",
+      "/sw.js",
+      "/icons/icon-192.png",
+      "/icons/icon-512.png",
+      // Add your Juz images:
+      "/Juz1",
+      "/Juz11/quran-juz-11-urdu-translation-1.jpg",
+      "/juz3.png",
+      // Add audio files if needed:
+      // "/audio/juz1.mp3",
+      // "/audio/juz2.mp3"
+    ]);
+  })
   );
 });
 
