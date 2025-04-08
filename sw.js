@@ -22,6 +22,7 @@ self.addEventListener('install', async (event) => {
           "/icons/icon-192.png",
           "/icons/icon-512.png",
           "/Juz5",
+          "/Juz11/quran-juz-11-urdu-translation-1.jpg",
           // Add Quran images or audio files here if needed
         ])
       )
