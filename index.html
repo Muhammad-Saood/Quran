@@ -105,7 +105,7 @@
 
     <div id="imagePage" class="container hidden">
         <a class="back-arrow" onclick="goBack()">🔙</a>
-        <h2 id="juzTitle" style="margin-top: 10px;"></h2>
+<h2 id="juzTitle"></h2>
 
 <!-- Audio Player -->
 <div class="audio-controls" style="display: inline-block; background-color: #ccc; border-radius: 10px; padding: 10px 20px; margin: 15px auto;">
@@ -114,10 +114,10 @@
   <button onclick="forward10()" style="background-color: #007BFF; color: white; border: none; padding: 8px 12px; margin: 0 5px; border-radius: 6px; font-size: 18px;">10s ⏩</button>
   <audio id="audioPlayer"></audio>
 </div>
-        <div class="juz-images" id="juzImages"></div>
+<div class="juz-images" id="juzImages"></div>
     </div>
 
-<script>
+    <script>
     setTimeout(() => {
         document.getElementById("openingPage").classList.add("hidden");
         document.getElementById("juzPage").classList.remove("hidden");
