@@ -109,9 +109,9 @@
 
 <!-- Audio Player -->
 <div class="audio-controls" style="display: inline-block; background-color: #ccc; border-radius: 10px; padding: 10px 20px; margin: 15px auto;">
-  <button onclick="rewind10()" style="background-color: #007BFF; color: white; border: none; padding: 8px 12px; margin: 0 5px; border-radius: 6px; font-size: 18px;">⏪ 10s</button>
+  <button onclick="rewind10()" style="background-color: #007BFF; color: white; border: none; padding: 8px 12px; margin: 0 5px; border-radius: 6px; font-size: 18px;"> 10s⏩</button>
   <button onclick="togglePlayPause()" id="playPauseBtn" style="background-color: #007BFF; color: white; border: none; padding: 8px 12px; margin: 0 5px; border-radius: 6px; font-size: 18px;">▶️</button>
-  <button onclick="forward10()" style="background-color: #007BFF; color: white; border: none; padding: 8px 12px; margin: 0 5px; border-radius: 6px; font-size: 18px;">10s ⏩</button>
+  <button onclick="forward10()" style="background-color: #007BFF; color: white; border: none; padding: 8px 12px; margin: 0 5px; border-radius: 6px; font-size: 18px;">10s ⏪</button>
   <audio id="audioPlayer"></audio>
 </div>
 <div class="juz-images" id="juzImages"></div>
@@ -210,11 +210,11 @@
     }
 
     function rewind10() {
-        audio.currentTime -= 10;
+        audio.currentTime += 10;
     }
 
     function forward10() {
-        audio.currentTime += 10;
+        audio.currentTime -= 10;
     }
 
     // Zoom functionality
