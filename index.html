@@ -116,8 +116,7 @@
 </div>
 <div class="juz-images" id="juzImages"></div>
     </div>
-
-    <script>
+<script>
     setTimeout(() => {
         document.getElementById("openingPage").classList.add("hidden");
         document.getElementById("juzPage").classList.remove("hidden");
@@ -167,90 +166,96 @@
         }
     }
 
-function loadJuzImages(juz) {
-    document.getElementById("juzPage").classList.add("hidden");
-    document.getElementById("imagePage").classList.remove("hidden");
-    document.getElementById("juzTitle").textContent = "پارہ نمبر " + juz;
+    function loadJuzImages(juz) {
+        // Set the audio source for the selected Juz first
+        audio.src = `https://raw.githubusercontent.com/Muhammad-Saood/Quran/main/juz${juz}.mp3`;
 
-    const juzImagesContainer = document.getElementById("juzImages");
-    juzImagesContainer.innerHTML = "";
+        // Hide the Juz list page and show the image page after setting the audio source
+        document.getElementById("juzPage").classList.add("hidden");
+        document.getElementById("imagePage").classList.remove("hidden");
 
-    let totalPages = juzPages[juz] || 18;  // Default to 18 if not specified
+        // Set the Juz title
+        document.getElementById("juzTitle").textContent = "پارہ نمبر " + juz;
 
-    // Load images for the selected Juz
-    for (let i = (juz === 1 ? 3 : 1); i <= totalPages; i++) {
-        let imgElement = document.createElement("img");
-        imgElement.src = `${githubRawUrl}Juz${juz}/quran-juz-${juz}-urdu-translation-${i}.jpg`;
-        imgElement.alt = `پارہ ${juz} صفحہ ${i}`;
-        juzImagesContainer.appendChild(imgElement);
-    }
+        const juzImagesContainer = document.getElementById("juzImages");
+        juzImagesContainer.innerHTML = ""; // Clear previous images
 
-    // Set the audio source for the selected Juz
-    audio.src = `https://raw.githubusercontent.com/Muhammad-Saood/Quran/main/juz${juz}.mp3`;
+        // Define the total number of pages for the selected Juz
+        let totalPages = juzPages[juz] || 18;  // Default to 18 pages if not specified
 
-    // Make sure the play button works and the audio is ready to play
-    playPauseBtn.innerText = '▶️'; // Reset play button text
-}
-
-// Audio logic
-const audio = document.getElementById("audioPlayer");
-const playPauseBtn = document.getElementById("playPauseBtn");
-
-function togglePlayPause() {
-    if (audio.paused) {
-        audio.play();
-        playPauseBtn.innerText = '⏸️'; // Change to pause button when playing
-    } else {
-        audio.pause();
-        playPauseBtn.innerText = '▶️'; // Change to play button when paused
-    }
-}
-
-function rewind10() {
-    audio.currentTime -= 10;
-}
-
-function forward10() {
-    audio.currentTime += 10;
+        // Load images for the selected Juz
+        for (let i = (juz === 1 ? 3 : 1); i <= totalPages; i++) {
+            let imgElement = document.createElement("img");
+            imgElement.src = `${githubRawUrl}Juz${juz}/quran-juz-${juz}-urdu-translation-${i}.jpg`;
+            imgElement.alt = `پارہ ${juz} صفحہ ${i}`;
+            juzImagesContainer.appendChild(imgElement);
         }
-      let scale = 1;
-const container = document.getElementById("juzImages");
 
-container.addEventListener("wheel", (e) => {
-    e.preventDefault(); // Prevent default scroll
-    scale += e.deltaY * -0.01; // Zoom in/out with the mouse wheel
-    scale = Math.min(Math.max(.5, scale), 3); // Limit zoom levels
-    container.style.transform = `scale(${scale})`;
-});
+        // Reset the play button to '▶️'
+        playPauseBtn.innerText = '▶️';
+    }
 
-let lastTouchDist = 0;
+    // Audio logic
+    const audio = document.getElementById("audioPlayer");
+    const playPauseBtn = document.getElementById("playPauseBtn");
 
-container.addEventListener("touchmove", (e) => {
-    if (e.touches.length === 2) {
-        e.preventDefault(); // Prevent normal scrolling
-        const dist = Math.hypot(
-            e.touches[0].clientX - e.touches[1].clientX,
-            e.touches[0].clientY - e.touches[1].clientY
-        );
-        if (lastTouchDist) {
-            scale *= dist / lastTouchDist;
-            scale = Math.min(Math.max(.5, scale), 3); // Limit zoom levels
-            container.style.transform = `scale(${scale})`;
+    function togglePlayPause() {
+        if (audio.paused) {
+            audio.play();
+            playPauseBtn.innerText = '⏸️'; // Change to pause button when playing
+        } else {
+            audio.pause();
+            playPauseBtn.innerText = '▶️'; // Change to play button when paused
         }
-        lastTouchDist = dist;
-    }
-});
-
-container.addEventListener("touchend", () => {
-    lastTouchDist = 0;
-});
     }
 
+    function rewind10() {
+        audio.currentTime -= 10;
+    }
+
+    function forward10() {
+        audio.currentTime += 10;
+    }
+
+    // Zoom functionality
+    let scale = 1;
+    const container = document.getElementById("juzImages");
+
+    container.addEventListener("wheel", (e) => {
+        e.preventDefault(); // Prevent default scroll
+        scale += e.deltaY * -0.01; // Zoom in/out with the mouse wheel
+        scale = Math.min(Math.max(.5, scale), 3); // Limit zoom levels
+        container.style.transform = `scale(${scale})`;
+    });
+
+    let lastTouchDist = 0;
+
+    container.addEventListener("touchmove", (e) => {
+        if (e.touches.length === 2) {
+            e.preventDefault(); // Prevent normal scrolling
+            const dist = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            if (lastTouchDist) {
+                scale *= dist / lastTouchDist;
+                scale = Math.min(Math.max(.5, scale), 3); // Limit zoom levels
+                container.style.transform = `scale(${scale})`;
+            }
+            lastTouchDist = dist;
+        }
+    });
+
+    container.addEventListener("touchend", () => {
+        lastTouchDist = 0;
+    });
+
+    // Go back to the Juz list page
     function goBack() {
         document.getElementById("imagePage").classList.add("hidden");
         document.getElementById("juzPage").classList.remove("hidden");
     }
-  </script>
+</script>
 <script>
   if (typeof navigator.serviceWorker !== 'undefined') {
     navigator.serviceWorker.register('sw.js')
