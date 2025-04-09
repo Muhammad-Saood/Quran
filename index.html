@@ -124,7 +124,7 @@
         loadJuzList();
     }, 3000);
 
-    const githubRawUrl = "https://raw.githubusercontent.com/saudking48/Quran/main/";
+    const githubRawUrl = "https://raw.githubusercontent.com/Muhammad-Saood/Quran/main/";
 
     const juzNames = [
         "اَلٓمّٓ", "سَيَقُوْلُ", "تِلْكَ الرُّسُلُ", "لَنْ تَنَالُوا", "وَالْمُحْصَنَاتُ", "لَا يُحِبُّ اللَّهُ",
@@ -220,40 +220,33 @@ container.addEventListener("touchend", () => {
         document.getElementById("imagePage").classList.add("hidden");
         document.getElementById("juzPage").classList.remove("hidden");
     }
+        // Audio logic
+const audio = document.getElementById("audioPlayer");
+const playPauseBtn = document.getElementById("playPauseBtn");
+audio.src = `https://raw.githubusercontent.com/Muhammad-Saood/Quran/main/juz${juz}.mp3`;
+
+function togglePlayPause() {
+    if (audio.paused) {
+        audio.play();
+        playPauseBtn.innerText = '⏸️';
+    } else {
+        audio.pause();
+        playPauseBtn.innerText = '▶️';
+    }
+}
+
+function rewind10() {
+    audio.currentTime -= 10;
+}
+
+function forward10() {
+    audio.currentTime += 10;
+    }
   </script>
 <script>
   if (typeof navigator.serviceWorker !== 'undefined') {
     navigator.serviceWorker.register('sw.js')
   }
 </script>
-    <script>
-  const audio = document.getElementById('audioPlayer');
-  const playPauseBtn = document.getElementById('playPauseBtn');
-
-  // Extract Juz number from the heading
-  const juzText = document.getElementById('juzTitle').innerText;
-  const juzNumber = juzText.match(/\d+/)[0];
-
-  // Set audio source based on juz number
-  audio.src = `juz${juzNumber}.mp3`;
-
-  function togglePlayPause() {
-    if (audio.paused) {
-      audio.play();
-      playPauseBtn.innerText = '⏸️';
-    } else {
-      audio.pause();
-      playPauseBtn.innerText = '▶️';
-    }
-  }
-
-  function rewind10() {
-    audio.currentTime -= 10;
-  }
-
-  function forward10() {
-    audio.currentTime += 10;
-  }
-    </script>
 </body>
   </html>
