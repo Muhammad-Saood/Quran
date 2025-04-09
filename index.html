@@ -183,6 +183,28 @@
             imgElement.alt = `پارہ ${juz} صفحہ ${i}`;
             juzImagesContainer.appendChild(imgElement);
         }
+                // Audio logic
+const audio = document.getElementById("audioPlayer");
+const playPauseBtn = document.getElementById("playPauseBtn");
+audio.src = `https://raw.githubusercontent.com/Muhammad-Saood/Quran/main/juz${juz}.mp3`;
+
+function togglePlayPause() {
+    if (audio.paused) {
+        audio.play();
+        playPauseBtn.innerText = '⏸️';
+    } else {
+        audio.pause();
+        playPauseBtn.innerText = '▶️';
+    }
+}
+
+function rewind10() {
+    audio.currentTime -= 10;
+}
+
+function forward10() {
+    audio.currentTime += 10;
+        }
       let scale = 1;
 const container = document.getElementById("juzImages");
 
@@ -219,28 +241,6 @@ container.addEventListener("touchend", () => {
     function goBack() {
         document.getElementById("imagePage").classList.add("hidden");
         document.getElementById("juzPage").classList.remove("hidden");
-    }
-        // Audio logic
-const audio = document.getElementById("audioPlayer");
-const playPauseBtn = document.getElementById("playPauseBtn");
-audio.src = `https://raw.githubusercontent.com/Muhammad-Saood/Quran/main/juz${juz}.mp3`;
-
-function togglePlayPause() {
-    if (audio.paused) {
-        audio.play();
-        playPauseBtn.innerText = '⏸️';
-    } else {
-        audio.pause();
-        playPauseBtn.innerText = '▶️';
-    }
-}
-
-function rewind10() {
-    audio.currentTime -= 10;
-}
-
-function forward10() {
-    audio.currentTime += 10;
     }
   </script>
 <script>
